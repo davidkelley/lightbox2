@@ -1,4 +1,3 @@
-
 /*
 Lightbox v2.51
 by Lokesh Dhakar - http://www.lokeshdhakar.com
@@ -201,9 +200,19 @@ lightbox = new Lightbox options
       preloader = new Image;
       preloader.onload = function() {
         $image.attr('src', _this.album[imageNumber].link);
-        $image.width = preloader.width;
-        $image.height = preloader.height;
-        return _this.sizeContainer(preloader.width, preloader.height);
+        var w, h, wW = $(window).width();
+        if (preloader.width > wW * 0.8) {
+          var scale = preloader.width / (wW * 0.8);
+          w = preloader.width / scale;
+          h = preloader.height / scale;
+        } else {
+          w = preloader.width;
+          h = preloader.height;
+        }
+
+        $image.width = w;
+        $image.height = h;
+        return _this.sizeContainer(w, h);
       };
       preloader.src = this.album[imageNumber].link;
       this.currentImageIndex = imageNumber;
